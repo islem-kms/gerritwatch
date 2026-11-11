@@ -97,7 +97,7 @@ annotators; P = precision, R = recall):
 | 40 | 0.878 | 0.798 | 0.836 | 0.936 | 0.702 | 0.802 |
 
 The default, `--min-distance 20`, has the best F1. Adding `--llm` gives fewer false alarms but misses about one
-semantic revision in five. `eval/detector_table.py` reproduces this table.
+semantic revision in five.
 
 ## Monitor options
 
@@ -121,18 +121,10 @@ Click the extension's icon in the toolbar to turn on **Only changes I opened**. 
 then flagged only if its description changed after the patchset you last opened in this
 browser.
 
-## Evaluation scripts and data
+## Evaluation
 
-| Script | Produces |
-|---|---|
-| `eval/detector_table.py` | the table above, from DescEvo's benchmark and GPT-4o-mini run (`data/descevo/`) |
-| `eval/live_run_stats.py` | statistics of the live run, from `data/live_run/events_*.jsonl` |
-| `eval/live_run_crosscheck.py` | checks the live run against Gerrit's revision history |
-| `eval/replay.py` | the 30-day replay: `fetch`, `pairs`, `llm`, `stats` (`data/replay/`) |
-| `eval/cleaning_check.py` | checks that the monitor cleans descriptions as DescEvo does (needs DescEvo's `pairs.csv`) |
-
-Run them from this folder, e.g. `python eval/detector_table.py`. In the data files, e-mail
-addresses are replaced by `<email>`.
+The evaluation scripts and data behind the paper (detector accuracy, live run, 30-day replay)
+are archived on Zenodo: https://doi.org/10.5281/zenodo.24125508
 
 ## Limitations
 
