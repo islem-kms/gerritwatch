@@ -22,7 +22,7 @@ RELEASE = (ROOT / "backend").is_dir()  # release layout: data/live_run/
 RUN = ROOT / "data" / "live_run" if RELEASE else ROOT / "live_run"
 OUT = RUN / "live_run_stats.json" if RELEASE else Path(__file__).with_name("live_run_stats.json")
 START = "2026-11-10T22:50:17Z"
-END = "2026-11-11T05:20:17Z"    # the paper reports the first 6.5 hours; later events are ignored
+END = "2026-11-11T05:50:17Z"    # the paper reports the first 7 hours; later events are ignored
 INSTANCES = ["onap", "libreoffice", "wikimedia"]
 T = 20  # recommended minimum edit distance
 

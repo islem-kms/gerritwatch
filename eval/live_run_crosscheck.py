@@ -30,7 +30,7 @@ from monitor_open_changes import clean_message, levenshtein  # noqa: E402
 RUN = DATA / "live_run"
 OUT = RUN / "live_run_crosscheck.json" if RELEASE else Path(__file__).with_name("live_run_crosscheck.json")
 START = "2026-11-10 22:50:17"  # UTC, Gerrit's timestamp format
-END = "2026-11-11 05:20:17"    # end of the reported window (same as live_run_stats.py)
+END = "2026-11-11 05:50:17"    # end of the reported window (same as live_run_stats.py)
 INSTANCES = {
     "onap": ("https://gerrit.onap.org/r", ""),
     "libreoffice": ("https://gerrit.libreoffice.org", ""),

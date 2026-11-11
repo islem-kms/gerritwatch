@@ -91,3 +91,6 @@
 {"type": "poll", "ts": "2026-11-11T06:23:11Z", "instance": "onap", "open_changes": 650, "edits": 0, "active_flags": 1, "duration_s": 3.6}
 {"type": "poll", "ts": "2026-11-11T06:28:14Z", "instance": "onap", "open_changes": 650, "edits": 0, "active_flags": 1, "duration_s": 3.4}
 {"type": "poll", "ts": "2026-11-11T06:33:18Z", "instance": "onap", "open_changes": 650, "edits": 0, "active_flags": 1, "duration_s": 3.8}
+{"type": "poll", "ts": "2026-11-11T06:38:21Z", "instance": "onap", "open_changes": 650, "edits": 0, "active_flags": 1, "duration_s": 3.4}
+{"type": "poll", "ts": "2026-11-11T06:43:25Z", "instance": "onap", "open_changes": 650, "edits": 0, "active_flags": 1, "duration_s": 3.5}
+{"type": "poll", "ts": "2026-11-11T06:48:28Z", "instance": "onap", "open_changes": 650, "edits": 0, "active_flags": 1, "duration_s": 3.5}
