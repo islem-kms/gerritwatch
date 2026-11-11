@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Options</title>
+  <style>
+    body { font: 13px system-ui, sans-serif; margin: 12px; width: 260px; }
+    label { display: flex; gap: 8px; align-items: center; font-weight: 600; }
+    p { color: #555; margin: 8px 0 0; line-height: 1.4; }
+  </style>
+</head>
+<body>
+  <label><input type="checkbox" id="onlyOpened"> Only changes I opened</label>
+  <p>When on, a change is flagged only if its description changed after the patchset you last
+     opened in this browser. When off, every flagged change is shown.</p>
+  <script src="popup.js"></script>
+</body>
+</html>

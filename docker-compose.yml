@@ -1,0 +1,42 @@
+# GerritWatch backend: the local server and one monitor per Gerrit instance.
+#   docker compose up -d                                   # server + ONAP monitor
+#   docker compose --profile libreoffice --profile wikimedia up -d   # add the other instances
+# The extension then reads http://127.0.0.1:8000/flags.json. For the LLM option, set
+# OPENAI_API_KEY in your shell or in a .env file next to this file, and add "--llm" to a command.
+
+x-monitor: &monitor
+  build: .
+  environment:
+    - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+  volumes:
+    - gw-data:/data
+  restart: unless-stopped
+
+services:
+  server:
+    build: .
+    command: ["python", "/app/backend/serve_cors.py"]
+    environment:
+      - GW_HOST=0.0.0.0
+    ports:
+      - "127.0.0.1:8000:8000"   # reachable from this computer only
+    volumes:
+      - gw-data:/data
+    restart: unless-stopped
+
+  monitor-onap:
+    <<: *monitor
+    command: ["python", "/app/backend/monitor_open_changes.py", "onap", "--min-distance", "20"]
+
+  monitor-libreoffice:
+    <<: *monitor
+    profiles: ["libreoffice"]
+    command: ["python", "/app/backend/monitor_open_changes.py", "libreoffice", "--min-distance", "20"]
+
+  monitor-wikimedia:
+    <<: *monitor
+    profiles: ["wikimedia"]
+    command: ["python", "/app/backend/monitor_open_changes.py", "wikimedia", "--project-filter", "mediawiki/core", "--min-distance", "20"]
+
+volumes:
+  gw-data:

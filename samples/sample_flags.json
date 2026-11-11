@@ -1,0 +1,24 @@
+[
+  {
+    "flag_id": "onap:149377:1-2",
+    "change_number": "149377",
+    "change_id": "I6b996beb972878746edbacdaf1b0ef7b70fca8ec",
+    "project": "oom",
+    "source_project": "onap",
+    "gerrit_host": "gerrit.onap.org",
+    "change_url": "https://gerrit.onap.org/r/c/oom/+/149377",
+    "subject": "[SO] 17.7.0",
+    "owner": "",
+    "old_patchset": 1,
+    "new_patchset": 2,
+    "old_description": "[SO] 17.7.0\n\n- update images of main SO repo (1.22.0 -> 1.23.0-20261102T1255)\n\nWIP: the images are snapshot builds from so-maven-docker-stage-master\n#1496 (so b5f7075f5) so that gating can run. Do not merge until they\nare replaced by the 1.23.0 release tag.\n\nIssue-ID: SO-4527",
+    "new_description": "[SO] 17.7.0\n\n- update images of main SO repo (1.22.0 -> 1.23.0-20261110T0855)\nwhich include Camunda 7.24.0, CXF 4.1.9, Tomcat 10.1.61 and the\ndependency CVE cleanups (SO-4528 to SO-4533)\n\nWIP: the images are snapshot builds from so-maven-docker-stage-master\n#1498 (so d1be57a4f) so that gating can run. Do not merge until they\nare replaced by the 1.23.0 release tag.\n\nIssue-ID: SO-4527",
+    "reason": "The NEW description provides specific details about the included versions of Camunda, CXF, Tomcat, and mentions dependency CVE cleanups, enhancing understanding of the update's impact.",
+    "confidence": 90,
+    "edit_distance": 119,
+    "detector": {
+      "min_distance": 20,
+      "llm": "gpt-4o-mini-2024-07-18"
+    }
+  }
+]

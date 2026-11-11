@@ -1,0 +1,8 @@
+.git
+**/__pycache__
+*.pyc
+flags.json
+feedback.json
+monitor_state_*.json
+events_*.jsonl
+.env

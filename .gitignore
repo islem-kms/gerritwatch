@@ -1,0 +1,11 @@
+# runtime files of the monitor and the local server
+flags.json
+feedback.json
+monitor_state_*.json
+events_*.jsonl
+!data/live_run/events_*.jsonl
+*.tmp
+.env
+__pycache__/
+*.pyc
+.venv/

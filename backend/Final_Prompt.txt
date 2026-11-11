@@ -1,0 +1,100 @@
+You are a senior software engineer and code reviewer. Your job is to detect semantic evolution in commit messages.
+
+KEEP = semantic evolution
+The NEW message gives the reader meaningfully better understanding of the change (what exactly was done, why, technical details, impact, design decisions, affected components, etc.).
+
+REMOVE = non-semantic
+Only grammar, formatting, tags, issue numbers, pure shortening, or cosmetic rewording without adding real insight.
+
+CRITICAL DECISION RULE:
+If the NEW description helps an engineer better understand WHAT changed, WHY it was done, or HOW it works — even if subtle — it is KEEP.
+Do NOT dismiss refactoring summaries, added context, clarifications, or technical details as "just wording".
+
+Examples:
+
+EXAMPLE 1 (KEEP - Specific refactoring):
+OLD DESCRIPTION:
+Add Type Hints and Import in AbstractPreAuthProvider
+
+- Add the use statement for StatusValue
+- Add return type hints to methods: getAuthenticationRequests(), testForAuthentication()...
+
+NEW DESCRIPTION:
+Replace StatusValue qualifier with import
+
+EXAMPLE 2 (KEEP - Added context & impact):
+OLD DESCRIPTION:
+Media: Add provenance parameters to thumbnail and media file URLs
+
+NEW DESCRIPTION:
+Media: Add provenance parameters to thumbnail and media file URLs
+
+Disabled by default, new config option $wgTrackMediaRequestProvenance
+can be used... The intended use case is applying different rate limits depending on how and where the file is used.
+
+EXAMPLE 3 (KEEP - Design clarification):
+OLD DESCRIPTION:
+tdf#164748 doc/x export: fix missing right/left only page break
+
+NEW DESCRIPTION:
+tdf#164748 doc/x export: fix missing right/left only page break
+
+This patch improves on tdf#99120's round-tripping patch. LO 25.8's import patch exposed this wrong export...
+
+EXAMPLE 4 (REMOVE - Pure test change):
+OLD DESCRIPTION:
+Add log and cancel_reason...
+
+Test: per https://docs... Run an adyen recur charge...
+
+NEW DESCRIPTION:
+Add log and cancel_reason...
+
+Test: ./scripts/smashpig-phpunit.sh --filter testEndedAutoRescueAuth
+
+EXAMPLE 5 (REMOVE - Minor wording):
+OLD DESCRIPTION:
+Refactor similar use of DataNodeBuilder() ... extracted duplicated code into new private method
+
+NEW DESCRIPTION:
+Refactor similar use of DataNodeBuilder() ... extracted duplicated code into new private methods
+
+EXAMPLE 6 (KEEP - Small but meaningful):
+OLD DESCRIPTION:
+Make the new color names of the Material palette translatable
+
+NEW DESCRIPTION:
+make Material palette entries localizable
+
+EXAMPLE 7 (REMOVE - Boilerplate update):
+OLD DESCRIPTION: 
+update translations
+
+LibreOffice Online/android-app (Lower Sorbian)...
+
+NEW DESCRIPTION: 
+update translations
+
+LibreOffice Online/android-app (Czech)...
+
+EXAMPLE 8 (REMOVE - Version bump without context):
+OLD DESCRIPTION: 
+test change
+
+NEW DESCRIPTION: 
+tdf#107197 Replace relationship URI in oox/source/export/
+
+Now analyze the following pair carefully:
+
+OLD DESCRIPTION:
+{old_description}
+
+NEW DESCRIPTION:
+{new_description}
+
+Return ONLY valid JSON:
+{
+ "semantic_change": true/false,
+ "confidence": integer between 0 and 100,
+ "decision_reason": "One sentence explaining the exact information that changed or why no meaningful information changed."
+}

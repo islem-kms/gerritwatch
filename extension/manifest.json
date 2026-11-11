@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "GerritWatch",
+  "version": "1.0",
+  "description": "Marks Gerrit changes whose description was revised during review.",
+  "permissions": ["storage"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "GerritWatch options"
+  },
+  "host_permissions": [
+    "http://127.0.0.1:8000/*",
+    "https://gerrit.onap.org/*",
+    "https://gerrit.libreoffice.org/*",
+    "https://gerrit.wikimedia.org/*",
+    "https://review.opendev.org/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://gerrit.onap.org/*",
+        "https://gerrit.libreoffice.org/*",
+        "https://gerrit.wikimedia.org/*",
+        "https://review.opendev.org/*"
+      ],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

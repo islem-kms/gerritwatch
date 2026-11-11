@@ -1,0 +1,129 @@
+/* Thumbs up/down feedback -- shown inside the modal */
+.sdm-feedback {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed #E5E7EB;
+}
+.sdm-feedback-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 3px;
+}
+.sdm-feedback-label {
+  font-size: 11px;
+  color: #6B7280;
+  flex: 1;
+}
+.sdm-thumb {
+  border: 1px solid #E5E7EB;
+  background: #fff;
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 1;
+  padding: 3px 6px;
+  cursor: pointer;
+  opacity: 0.55;
+  filter: grayscale(1);
+  transition: opacity 0.12s ease, filter 0.12s ease, background 0.12s ease, border-color 0.12s ease;
+}
+.sdm-thumb:hover { opacity: 0.85; filter: grayscale(0.4); }
+.sdm-thumb.active { opacity: 1; filter: grayscale(0); }
+.sdm-thumb-up.active { background: #DCFCE7; border-color: #86EFAC; }
+.sdm-thumb-down.active { background: #FEE2E2; border-color: #FCA5A5; }
+
+.sdm-modal-cta {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 650;
+  color: #fff;
+  background: #2563EB;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+}
+.sdm-modal-cta:hover { background: #1D4ED8; }
+
+/* Floating annotation icon -- positioned via JS to align with a matching
+   row's on-screen coordinates. Lives in the top-level document (never
+   inserted into Gerrit's own DOM), which is what makes this stylesheet
+   actually able to reach it -- Shadow DOM (used by PolyGerrit) blocks
+   outside stylesheets from styling anything inserted inside it. */
+.sdm-fixed-icon {
+  position: fixed;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #FEF3C7;
+  border: 1px solid #F5C462;
+  color: #92400E;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 999999;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.sdm-fixed-icon:hover { background: #FDE7A8; }
+
+#sdm-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,18,25,0.45);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 20px;
+  overflow-y: auto;
+  z-index: 9999999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+.sdm-modal-box {
+  background: #fff;
+  width: 100%;
+  max-width: 620px;
+  border-radius: 10px;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+  overflow: hidden;
+}
+.sdm-modal-head {
+  padding: 14px 18px;
+  border-bottom: 1px solid #E5E7EB;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.sdm-modal-title { font-size: 14.5px; font-weight: 650; color: #1F2430; }
+.sdm-modal-sub { font-size: 12px; color: #6B7280; margin-top: 2px; }
+.sdm-close { border: none; background: none; cursor: pointer; font-size: 16px; color: #6B7280; }
+.sdm-close:hover { color: #1F2430; }
+.sdm-modal-body { padding: 16px 18px; }
+.sdm-label {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em;
+  color: #6B7280; font-weight: 650; margin-bottom: 6px;
+}
+.sdm-diff {
+  font-size: 13px; line-height: 1.55; background: #FBFBFC;
+  border: 1px solid #E5E7EB; border-radius: 6px; padding: 12px 14px; margin-bottom: 16px;
+  white-space: pre-wrap; overflow-wrap: anywhere; max-height: 320px; overflow-y: auto;
+}
+.sdm-diff del { background: #FEE2E2; color: #991B1B; text-decoration: none; padding: 1px 2px; border-radius: 3px; }
+.sdm-diff ins { background: #DCFCE7; color: #166534; text-decoration: none; padding: 1px 2px; border-radius: 3px; }
+.sdm-reason {
+  background: #FEF3C7; border: 1px solid #F5C462; color: #92400E;
+  border-radius: 6px; padding: 12px 14px; font-size: 13px; line-height: 1.5;
+  margin-bottom: 4px; white-space: pre-wrap; overflow-wrap: anywhere;
+}
+#sdm-modal .sdm-feedback {
+  border-top: 1px solid #E5E7EB;
+  margin: 14px 0;
+  padding-top: 10px;
+}
+#sdm-modal .sdm-feedback-label { font-size: 12.5px; }
+#sdm-modal .sdm-thumb { font-size: 14px; padding: 4px 8px; }
