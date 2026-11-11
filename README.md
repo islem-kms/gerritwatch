@@ -85,7 +85,7 @@ few-shot prompt in `backend/Final_Prompt.txt`) also has to say that the meaning 
 reason is shown in the popup. The LLM needs `OPENAI_API_KEY` and sends both descriptions to
 OpenAI.
 
-Expected accuracy of each setting on the DescEvo benchmark (379 revisions labeled by two
+Accuracy of each setting on our labeled benchmark (379 revisions labeled by two
 annotators; P = precision, R = recall):
 
 | `--min-distance` | P | R | F1 | with `--llm`: P | R | F1 |
@@ -124,14 +124,14 @@ browser.
 ## Evaluation
 
 The evaluation scripts and data behind the paper (detector accuracy, live run, 30-day replay)
-are archived on Zenodo: https://doi.org/10.5281/zenodo.24125508
+are archived on Zenodo: https://doi.org/10.5281/zenodo.24125507
 
 ## Limitations
 
 The monitor polls, so a revision is reported up to one interval after upload, and patchsets
 uploaded between two polls are compared as one revision. A change seen for the first time is
 only recorded. A flag is removed when a later revision of the change is not flagged. Lines that
-only reference an issue are removed before comparing, as in DescEvo.
+only reference an issue are removed before comparing.
 
 ## License
 
@@ -140,5 +140,4 @@ MIT, see `LICENSE`.
 ## Citation
 
 GerritWatch: Alerting Reviewers to Revised Change Descriptions in Gerrit. Under submission.
-Software archive: Zenodo, DOI 10.5281/zenodo.24125508 (https://doi.org/10.5281/zenodo.24125508).
-The detector settings are evaluated on DescEvo (Zenodo, DOI 10.5281/zenodo.24094881).
+Software archive: Zenodo, DOI 10.5281/zenodo.24125507 (https://doi.org/10.5281/zenodo.24125507).

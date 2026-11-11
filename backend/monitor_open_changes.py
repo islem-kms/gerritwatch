@@ -4,10 +4,10 @@ change descriptions. It runs in a loop:
 
   1. Ask the Gerrit REST API for all open changes, with the current patchset and its
      commit message (the change description).
-  2. Clean each description the same way as the DescEvo dataset and compare it with the
+  2. Clean each description (remove lines that tools add to every patchset) and compare it with the
      description seen at the previous poll.
   3. If it changed, compute the character-level edit distance. A revision is flagged if
-     the distance is above --min-distance and, with --llm, if GPT-4o-mini (DescEvo's
+     the distance is above --min-distance and, with --llm, if GPT-4o-mini (with the
      few-shot prompt, Final_Prompt.txt) says the meaning changed.
   4. Write the flags to flags.json, which serve_cors.py passes to the browser extension,
      and append every revision and poll to events_<instance>.jsonl.
@@ -23,7 +23,7 @@ Options:
     --once             run one poll and exit
     --project-filter P only watch repository P
     --min-distance N   flag a revision only if its edit distance is > N (default 20, the best
-                       setting on the DescEvo benchmark; 0 flags every revision)
+                       setting on our labeled benchmark; 0 flags every revision)
     --llm              also ask GPT-4o-mini (needs OPENAI_API_KEY and Final_Prompt.txt)
     --llm-mode M       decide (default): only revisions the LLM labels semantic are flagged;
                        record: flag by distance alone and only log the LLM's answer
@@ -84,8 +84,8 @@ RETRY_BACKOFF_MAX = 60.0
 REQUEST_TIMEOUT = 60
 
 POLL_INTERVAL_SECONDS = 15 * 60   # re-check every 15 minutes
-DEFAULT_MIN_DISTANCE = 20         # best F1 on the DescEvo benchmark; --min-distance 0 flags every edit
-OPENAI_MODEL = "gpt-4o-mini-2024-07-18"   # the snapshot scored in DescEvo, pinned so results stay comparable
+DEFAULT_MIN_DISTANCE = 20         # best F1 on our labeled benchmark; --min-distance 0 flags every edit
+OPENAI_MODEL = "gpt-4o-mini-2024-07-18"   # the snapshot we evaluated, pinned so results stay comparable
 OPENAI_TIMEOUT = 60
 
 # ================================================================================
@@ -175,7 +175,7 @@ except ImportError:          # pure-Python fallback below: same result, much slo
 
 def levenshtein(a: str, b: str) -> int:
     """Character-level Levenshtein distance (unit cost for insert, delete, substitute),
-    the measure behind DescEvo's edit_distance column (rapidfuzz Levenshtein.distance)."""
+    the measure used in our benchmark (rapidfuzz Levenshtein.distance)."""
     if _rf_levenshtein is not None:
         return _rf_levenshtein.distance(a, b)
     if len(a) < len(b):
@@ -343,7 +343,7 @@ def classify_pair(template: str, old_desc: str, new_desc: str) -> dict:
             content = body["choices"][0]["message"]["content"].strip()
             content = re.sub(r"^```json\s*|\s*```$", "", content.strip())
             parsed = json.loads(content)
-            # The DescEvo prompt (v1_final.txt) answers {"semantic_change": bool, "confidence",
+            # Final_Prompt.txt answers {"semantic_change": bool, "confidence",
             # "decision_reason"}; older prompts answered {"label": "KEEP"/"REMOVE", "reason"}.
             if isinstance(parsed.get("semantic_change"), bool):
                 prediction = "KEEP" if parsed["semantic_change"] else "REMOVE"
