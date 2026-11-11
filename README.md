@@ -147,4 +147,5 @@ MIT, see `LICENSE`.
 ## Citation
 
 GerritWatch: Alerting Reviewers to Revised Change Descriptions in Gerrit. Under submission.
+Software archive: Zenodo, DOI 10.5281/zenodo.24125508 (https://doi.org/10.5281/zenodo.24125508).
 The detector settings are evaluated on DescEvo (Zenodo, DOI 10.5281/zenodo.24094881).
