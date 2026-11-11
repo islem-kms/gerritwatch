@@ -129,6 +129,7 @@ browser.
 | `eval/live_run_stats.py` | statistics of the live run, from `data/live_run/events_*.jsonl` |
 | `eval/live_run_crosscheck.py` | checks the live run against Gerrit's revision history |
 | `eval/replay.py` | the 30-day replay: `fetch`, `pairs`, `llm`, `stats` (`data/replay/`) |
+| `eval/cleaning_check.py` | checks that the monitor cleans descriptions as DescEvo does (needs DescEvo's `pairs.csv`) |
 
 Run them from this folder, e.g. `python eval/detector_table.py`. In the data files, e-mail
 addresses are replaced by `<email>`.
