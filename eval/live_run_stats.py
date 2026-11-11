@@ -22,6 +22,7 @@ RELEASE = (ROOT / "backend").is_dir()  # release layout: data/live_run/
 RUN = ROOT / "data" / "live_run" if RELEASE else ROOT / "live_run"
 OUT = RUN / "live_run_stats.json" if RELEASE else Path(__file__).with_name("live_run_stats.json")
 START = "2026-11-10T22:50:17Z"
+END = "2026-11-11T05:20:17Z"    # the paper reports the first 6.5 hours; later events are ignored
 INSTANCES = ["onap", "libreoffice", "wikimedia"]
 T = 20  # recommended minimum edit distance
 
@@ -73,14 +74,13 @@ def main():
     result = {}
     for name in INSTANCES:
         events = [json.loads(l) for l in open(RUN / f"events_{name}.jsonl", encoding="utf-8")]
-        events = [e for e in events if e["ts"] >= START]
+        events = [e for e in events if START <= e["ts"] < END]
         result[name] = summarize(events)
     total = {k: sum(result[n][k] for n in INSTANCES)
              for k in ("polls", "failed_polls", "revisions", "flags_every_revision", f"flags_t{T}",
                        "flags_llm_only", f"flags_t{T}_llm", "llm_calls")}
     total["open_changes_max"] = sum(result[n]["open_changes_max"] or 0 for n in INSTANCES)
-    last = max(result[n]["last_poll"] for n in INSTANCES)
-    total["hours"] = round((ts(last) - ts(START)).total_seconds() / 3600, 1)
+    total["hours"] = round((ts(END) - ts(START)).total_seconds() / 3600, 1)
     result["total"] = total
     OUT.write_text(json.dumps(result, indent=2))
     print(json.dumps(result, indent=2))

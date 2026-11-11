@@ -35,7 +35,7 @@ docker compose logs -f monitor-onap              # watch the polls
 docker compose down                              # stop (add -v to delete the stored flags)
 ```
 
-The server is published on `127.0.0.1:8000` only. The monitors use `--min-distance 20`; to
+The server is published on `127.0.0.1:8000` only. The monitors use the default `--min-distance 20`; to
 change a setting, or to add `--llm`, edit the `command` lines in `docker-compose.yml`. For
 `--llm`, put `OPENAI_API_KEY=sk-...` in a `.env` file next to `docker-compose.yml`.
 
@@ -45,7 +45,7 @@ change a setting, or to add `--llm`, edit the `command` lines in `docker-compose
 pip install -r requirements.txt
 cd backend
 python serve_cors.py                                  # terminal 1: local server
-python monitor_open_changes.py onap --min-distance 20 # terminal 2: one monitor per instance
+python monitor_open_changes.py onap                  # terminal 2: one monitor per instance
 ```
 
 Run the monitor and the server in the same folder: the monitor writes `flags.json` there, and
@@ -80,7 +80,7 @@ GPT-4o-mini.
 ## Choosing the detector setting
 
 A revision is flagged if its character-level edit distance is above `--min-distance` (default
-0: every revision). With `--llm`, GPT-4o-mini (`gpt-4o-mini-2024-07-18`, temperature 0, the
+20, the recommended value; `--min-distance 0` flags every revision). With `--llm`, GPT-4o-mini (`gpt-4o-mini-2024-07-18`, temperature 0, the
 few-shot prompt in `backend/Final_Prompt.txt`) also has to say that the meaning changed; its
 reason is shown in the popup. The LLM needs `OPENAI_API_KEY` and sends both descriptions to
 OpenAI.
@@ -96,7 +96,7 @@ annotators; P = precision, R = recall):
 | 30 | 0.880 | 0.880 | 0.880 | 0.935 | 0.764 | 0.841 |
 | 40 | 0.878 | 0.798 | 0.836 | 0.936 | 0.702 | 0.802 |
 
-We recommend `--min-distance 20`. Adding `--llm` gives fewer false alarms but misses about one
+The default, `--min-distance 20`, has the best F1. Adding `--llm` gives fewer false alarms but misses about one
 semantic revision in five. `eval/detector_table.py` reproduces this table.
 
 ## Monitor options
@@ -107,7 +107,7 @@ semantic revision in five. `eval/detector_table.py` reproduces this table.
 | `--interval S` | seconds between polls (default 900) |
 | `--once` | run one poll and exit |
 | `--project-filter P` | watch only repository `P` (e.g. `mediawiki/core`) |
-| `--min-distance N` | flag only revisions with edit distance above `N` (default 0) |
+| `--min-distance N` | flag only revisions with edit distance above `N` (default 20; 0 flags every revision) |
 | `--llm` | also ask GPT-4o-mini |
 | `--llm-mode decide\|record` | `decide` (default): the LLM decides; `record`: flag by distance, only log the LLM's answer |
 

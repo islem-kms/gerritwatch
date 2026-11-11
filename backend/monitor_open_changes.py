@@ -22,8 +22,8 @@ Options:
     --interval S       seconds between polls (default 900)
     --once             run one poll and exit
     --project-filter P only watch repository P
-    --min-distance N   flag a revision only if its edit distance is > N (default 0: every
-                       revision; 20 is the recommended value, see README)
+    --min-distance N   flag a revision only if its edit distance is > N (default 20, the best
+                       setting on the DescEvo benchmark; 0 flags every revision)
     --llm              also ask GPT-4o-mini (needs OPENAI_API_KEY and Final_Prompt.txt)
     --llm-mode M       decide (default): only revisions the LLM labels semantic are flagged;
                        record: flag by distance alone and only log the LLM's answer
@@ -84,7 +84,7 @@ RETRY_BACKOFF_MAX = 60.0
 REQUEST_TIMEOUT = 60
 
 POLL_INTERVAL_SECONDS = 15 * 60   # re-check every 15 minutes
-DEFAULT_MIN_DISTANCE = 0          # flag every description edit unless --min-distance is given
+DEFAULT_MIN_DISTANCE = 20         # best F1 on the DescEvo benchmark; --min-distance 0 flags every edit
 OPENAI_MODEL = "gpt-4o-mini-2024-07-18"   # the snapshot scored in DescEvo, pinned so results stay comparable
 OPENAI_TIMEOUT = 60
 
@@ -594,7 +594,7 @@ def main():
                          help="Seconds between poll cycles (default: 900 = 15 min)")
     parser.add_argument("--once", action="store_true", help="Run a single poll cycle and exit (useful for testing)")
     parser.add_argument("--min-distance", type=int, default=DEFAULT_MIN_DISTANCE,
-                         help="Flag an edit only if its Levenshtein distance is > N (default: 0 = every edit)")
+                         help="Flag an edit only if its Levenshtein distance is > N (default: 20; 0 = every edit)")
     parser.add_argument("--llm", action="store_true",
                          help=f"Ask the LLM ({OPENAI_MODEL}) about every candidate edit")
     parser.add_argument("--llm-mode", choices=["decide", "record"], default="decide",

@@ -30,6 +30,7 @@ from monitor_open_changes import clean_message, levenshtein  # noqa: E402
 RUN = DATA / "live_run"
 OUT = RUN / "live_run_crosscheck.json" if RELEASE else Path(__file__).with_name("live_run_crosscheck.json")
 START = "2026-11-10 22:50:17"  # UTC, Gerrit's timestamp format
+END = "2026-11-11 05:20:17"    # end of the reported window (same as live_run_stats.py)
 INSTANCES = {
     "onap": ("https://gerrit.onap.org/r", ""),
     "libreoffice": ("https://gerrit.libreoffice.org", ""),
@@ -51,7 +52,7 @@ def main():
         logged = {}
         for line in open(RUN / f"events_{name}.jsonl", encoding="utf-8"):
             e = json.loads(line)
-            if e["type"] == "edit":
+            if e["type"] == "edit" and e["ts"] < END.replace(" ", "T") + "Z":
                 logged.setdefault(str(e["change_number"]), []).append((e["old_patchset"], e["new_patchset"]))
         changes, offset = [], 0
         while True:
@@ -66,7 +67,7 @@ def main():
         for c in changes:
             revs = sorted(c["revisions"].values(), key=lambda r: r["_number"])
             for prev, cur in zip(revs, revs[1:]):
-                if cur["created"][:19] < START:
+                if not (START <= cur["created"][:19] < END):
                     continue
                 new_ps += 1
                 a, b = clean_message(prev["commit"]["message"]), clean_message(cur["commit"]["message"])
